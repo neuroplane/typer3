@@ -2,22 +2,16 @@
 ############################
 ##### DIRECTORY CHECK  #####
 ############################
-#echo "LOADING"
+##### COPY CLOUD VRBLS #####
+############################
 getamount(){
 	bold=$(tput bold)
 	normal=$(tput sgr0)
-	y=0
-	z=10
-	#ssh lumet@ssh.lumet.nichost.ru 'echo 155 > /home/lumet/salary.m'
-	while [ $y -lt $z ] 
-	        do
-	                x=$(ssh lumet@ssh.lumet.nichost.ru 'cat /home/lumet/salary.m')
-	                echo $x
-	                x=$(($x + 5))
-	                ssh lumet@ssh.lumet.nichost.ru "echo $x > /home/lumet/salary.m"
-	                y=$(($y + 1))
-	done
-echo "У ТЕБЯ ${bold}$x${normal} РУБЛЕЙ НА СЧЕТЕ"
+	money=$(ssh lumet@ssh.lumet.nichost.ru cat /home/lumet/typer/sal.m)
+	wc=$(ssh lumet@ssh.lumet.nichost.ru cat /home/lumet/typer/wc.m)
+
+echo "У ТЕБЯ ${bold}$money${normal} РУБЛЕЙ НА СЧЕТЕ"
+echo "И $wc ПОПЫТОК"
 }
 if [ ! -d ~/typer ]; then
 	sudo mkdir ~/typer
@@ -25,13 +19,13 @@ if [ ! -d ~/typer ]; then
 	echo "CREATED SCRIPTS DIRECTORY"
 	sleep 4
 fi
-if [ ! -f ~/typer/wc.t ]; then 
+if [ ! -f ~/typer/wc.t ]; then
 	sudo echo "10" > ~/typer/wc.t
 	echo "CREATED WORDS COUNT FILE"
 	sleep 4
 fi
-if [ ! -d /media/pi/RASPBERRYPI ]; then 
-	echo -e "\033[41m\033[30mNO USB DRIVE MOUNTED!\nMOUNT DRIVE AND RELAUNCH SCRIPT!\033[0m"
+if [ ! -d /media/pi/RASPBERRYPI ]; then
+	echo -e "NO USB DRIVE MOUNTED! MOUNT DRIVE AND RELAUNCH SCRIPT!"
 	sleep 4
 	exit
 fi
@@ -39,29 +33,29 @@ fi
 wc=$(head -n1 ~/typer/wc.t)
 t=0
 clear
-echo -e "\033[42m\033[30mENTRIES LEFT: $wc\n\n\033[0m"
+echo -e "\033[42m\033[30m| ENTRIES LEFT: $wc\n\n\033[0m"
 
 while [ $t -lt $wc ]
 	do
 		digit1=$(($RANDOM % 5 + 1))
 		digit2=$(($RANDOM % 5 + 1))
 		digit3=$(($digit1 + $digit2))
-		echo -e "COMPUTE: \033[33m$digit1 + $digit2\033[0m"
+		echo -e "COMPUTE: \033[33m| $digit1 + $digit2\033[0m"
 		read vari
 		if [ "$vari" = "$digit3" ]; then
 			clear
 			t=$(( $t + 1 ))
 			y=$(( $wc - $t ))
-			echo -e "\033[42m\033[30mCORRECT! ENTRIES LEFT:$y\nSECONDS PASSED: $SECONDS\n\033[0m"
+			echo -e "\033[42m\033[30m| CORRECT! ENTRIES LEFT:$y\nSECONDS PASSED: $SECONDS\n\033[0m"
 		elif [ "$vari" = "reset" ]; then
 			clear
-			echo -e "\033[42m\033[30m  RESET! ENTRIES LEFT: $wc\n\n\033[0m"
+			echo -e "\033[42m\033[30m| RESET! ENTRIES LEFT: $wc\n\n\033[0m"
 			t=0
 		else
 			clear
 			t=$(($t - 1))
 			y=$(($wc - $t))
-			echo -e "\033[41m\033[30mINCORRECT! ENTRIES LEFT: $y\nSECONDS PASSED: $SECONDS\n\033[0m"
+			echo -e "\033[41m\033[30m| INCORRECT! ENTRIES LEFT: $y\nSECONDS PASSED: $SECONDS\n\033[0m"
 		fi
 	done
 echo $(($wc + 1)) > ~/typer/wc.t
@@ -70,7 +64,7 @@ addon(){
 	addons=("sudo" "mkdir" "nano" "less" "rm" "echo" "touch" )
 	a=0; b=1;
 	addon_length=${#addons[@]}
-	
+
 	while [ $a -lt $b ]
 	do
 		clear
