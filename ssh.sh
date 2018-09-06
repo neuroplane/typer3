@@ -1,4 +1,5 @@
 #!/bin/bash
+#
 bold=$(tput bold)
 normal=$(tput sgr0)
 web_money=$(ssh lumet@ssh.lumet.nichost.ru cat /home/lumet/typer/sal.m)
