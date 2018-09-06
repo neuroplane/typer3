@@ -9,7 +9,7 @@ getamount(){
 	normal=$(tput sgr0)
 	money=$(ssh lumet@ssh.lumet.nichost.ru cat /home/lumet/typer/sal.m)
 	wc=$(ssh lumet@ssh.lumet.nichost.ru cat /home/lumet/typer/wc.m)
-
+	[ $(date +%w) -eq 6 ] && echo "do something on Saturdays" || echo "do different things on other days"
 echo "У ТЕБЯ ${bold}$money${normal} РУБЛЕЙ НА СЧЕТЕ"
 echo "И $wc ПОПЫТОК"
 }
