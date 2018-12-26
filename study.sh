@@ -1,7 +1,7 @@
 #!/bin/bash
 clear
 type_selection(){
-  type=$((RANDOM % 5))
+  type=$((RANDOM % 2))
     if   [[ $type = 0 ]]; then
       sum
     elif [[ $type = 1 ]]; then
@@ -94,7 +94,24 @@ division(){
 
 echo "TYPE IN NUMBER OF ENTRIES"
 read entries_to_do
+clear
 while [[ $entries_to_do -ne 0 ]]; do
   type_selection
 done
+#### VIDEO SELECT ####
+vfolder="/media/$USER/RASPBERRY/Videos/"
+options=($(ls $vfolder))
+folders=$(ls $vfolder | wc -l)
+x=0
+while [ $x -lt $folders ]
+        do
+                echo -e "\033[33m$x\033[0m. ${options[$x]}"
+                ((x++))
+        done
+read selector
+vfile=$(ls "$vfolder${options[$selector]}" | shuf -n 1)
+clear
+echo -e "NOW PLAYING: \033[33m$vfile\033[0m"
+sleep 3
+#cvlc --play-and-exit --fullscreen --no-keyboard-events "$vfolder${options[$selector]}/$vfile"
 echo "NOW IT'S TIME TO WATCH SOME CARTOONS"
