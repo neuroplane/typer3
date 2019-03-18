@@ -1,0 +1,5 @@
+hello
+dog
+sky
+red
+blue
