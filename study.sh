@@ -112,14 +112,14 @@ folders=$(ls $vfolder | wc -l)
 x=0
 while [ $x -lt $folders ]
         do
-                echo -e "\033[33m$x\033[0m. ${options[$x]}"
+                echo -e "$x. ${options[$x]}"
                 ((x++))
         done
 read selector
 #Next we choose random file from the selected subfolder
 vfile=$(ls "$vfolder${options[$selector]}" | shuf -n 1)
 clear
-echo -e "NOW PLAYING: \033[33m$vfile\033[0m"
+echo -e "NOW PLAYING: $vfile"
 sleep 0
 cvlc --play-and-exit --fullscreen --no-keyboard-events "$vfolder${options[$selector]}/$vfile"
 
